@@ -56,35 +56,17 @@ class _WordCounterWidgetState extends State<WordCounterWidget> {
     );
   }
 
-  // we can replace this button with the other button that I made under it
-  void _onButtonPressed() async {
-    setState(() {
-      _message = 'Please wait';
-      _isProcessing = true;
-    });
-    final textFieldContent = _controller.text;
-    final uri = Uri.parse(textFieldContent);
-    final response = await http.get(uri);
-    final wordCounter = WordCounter();
-    final count = wordCounter.countWords(response.body);
-    setState(() {
-      _message = 'I found $count words';
-      _isProcessing = false;
-    });
-  }
-
   void _onButtonPressedHitUrl() {
     setState(() {
       _message = 'please wait';
       _isProcessing = true;
     });
     final textFieldContent = _controller.text;
-    // Stdin is supposed to take a user input but I don't know
-    final response = stdin.readLineSync();
-    final linkAdding = LinkMaker();
-    final count = linkAdding.linkAdder();
+    // Stdin.readLineSync(); is supposed to take a user input but I don't know
+    final linkAddingSearch = LinkMaker();
+    final search = linkAddingSearch.linkAdder('s');
     setState(() {
-      _message = 'You have Searched $response';
+      _message = 'You have Searched $search';
       _isProcessing = false;
     });
   }
