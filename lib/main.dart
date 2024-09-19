@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twp_roth_munchel/link.dart';
-import 'package:http/http.dart' as http;
-import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Wikipedia Change Log App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
       home: const WordCounterWidget(),
@@ -41,7 +38,6 @@ class _WordCounterWidgetState extends State<WordCounterWidget> {
     return DefaultTextStyle(
       style: const TextStyle(
         fontSize: 32,
-        color: Colors.black,
       ),
       child: Column(
         children: [
@@ -65,11 +61,11 @@ class _WordCounterWidgetState extends State<WordCounterWidget> {
     });
     final textFieldContent = _controller.text;
     // Stdin.readLineSync(); is supposed to take a user input but I don't know
-    final linkAddingSearch = LinkMaker();
-    final search = linkAddingSearch.linkAdder('s');
-    setState(() {
-      _message = 'You have Searched $search';
-      _isProcessing = false;
-    });
+    // final linkAddingSearch = LinkMaker();
+    //final search = linkAddingSearch.linkAdder(textFieldContent);
+    //setState(() {
+    //_message = 'You have Searched $search';
+    //_isProcessing = false;
+    //});
   }
 }
