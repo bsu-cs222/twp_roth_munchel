@@ -14,17 +14,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Wikipedia Change Log App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Scaffold(body: WordCounterWidget()),
+      home: const WordCounterWidget(),
     );
   }
 }
 
 class WordCounterWidget extends StatefulWidget {
+  const WordCounterWidget({super.key});
+
   @override
   State<WordCounterWidget> createState() => _WordCounterWidgetState();
 }
