@@ -1,0 +1,41 @@
+{
+  "continue": {
+    "rvcontinue": "20240805151936|1238763153",
+    "continue": "||"
+  },
+  "query": {
+    "normalized": [
+      {
+        "from": "Ball_State_University",
+        "to": "Ball State University"
+      }
+    ],
+    "pages": {
+      "390375": {
+        "pageid": 390375,
+        "ns": 0,
+        "title": "Ball State University",
+        "revisions": [
+          {
+            "user": "GreenC bot",
+            "timestamp": "2024-08-26T15:04:28Z"
+          },
+          {
+            "user": "GreenC bot",
+            "timestamp": "2024-08-16T15:53:19Z"
+          },
+          {
+            "user": "64.184.104.194",
+            "anon": "",
+            "timestamp": "2024-08-15T18:40:26Z"
+          },
+          {
+            "user": "64.184.104.194",
+            "anon": "",
+            "timestamp": "2024-08-15T18:39:09Z"
+          }
+        ]
+      }
+    }
+  }
+}

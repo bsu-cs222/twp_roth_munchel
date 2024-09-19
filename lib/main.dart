@@ -60,12 +60,5 @@ class _WordCounterWidgetState extends State<WordCounterWidget> {
       _isProcessing = true;
     });
     final textFieldContent = _controller.text;
-    // Stdin.readLineSync(); is supposed to take a user input but I don't know
-    // final linkAddingSearch = LinkMaker();
-    //final search = linkAddingSearch.linkAdder(textFieldContent);
-    //setState(() {
-    //_message = 'You have Searched $search';
-    //_isProcessing = false;
-    //});
   }
 }
