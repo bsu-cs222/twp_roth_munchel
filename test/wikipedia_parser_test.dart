@@ -10,14 +10,14 @@ main() {
   test('Patch23 is the most recent user', () async {
     final jsonEncodedResponse = await File('test/soup.json').readAsString();
     final jsonDecoded = jsonDecode(jsonEncodedResponse);
-    final editorName = parser.editorName(jsonDecoded);
+    final editorName = parser.parse(jsonDecoded);
     expect(editorName, 'Patch23');
   });
 
   test('The PageID is 19651298', () async {
     final jsonEncodedResponse = await File('test/soup.json').readAsString();
     final jsonDecoded = jsonDecode(jsonEncodedResponse);
-    final pageId = parser.searchID(jsonDecoded);
+    final pageId = parser.parse(jsonDecoded);
     expect(pageId, 19651298);
   });
 }

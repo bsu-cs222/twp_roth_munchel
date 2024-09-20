@@ -1,9 +1,7 @@
-class WikipediaParser {
-  String editorName(dynamic jsonData) {
-    return jsonData['query']['pages'].values.first['revisions'][0]['user'];
-  }
+import 'package:twp_roth_munchel/http_fetcher.dart';
 
-  int searchID(dynamic jsonData) {
-    return jsonData['query']['pages'].values.first['pageid'];
+class WikipediaParser {
+  String parse(dynamic jsonData) {
+    return jsonData['query']['pages'].values.first['revisions'][0]['user'];
   }
 }
