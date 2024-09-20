@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'album.dart';
 
 class FetchHttp {
   Future<Album> fetchAlbum() async {
@@ -10,33 +11,5 @@ class FetchHttp {
     } else {
       throw Exception('Failed to load album');
     }
-  }
-}
-
-class Album {
-  final int userId;
-  final int id;
-  final String name;
-
-  const Album({
-    required this.userId,
-    required this.id,
-    required this.name,
-  });
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'userId': int userId,
-        'id': int id,
-        'title': String title,
-      } =>
-        Album(
-          userId: userId,
-          id: id,
-          name: title,
-        ),
-      _ => throw const FormatException('Failed to load album'),
-    };
   }
 }
