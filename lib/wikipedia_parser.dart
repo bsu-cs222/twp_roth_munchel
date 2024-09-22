@@ -1,5 +1,13 @@
 class WikipediaParser {
-  String parse(dynamic jsonData) {
-    return jsonData['query']['pages'].values['revisions'][0]['user'];
+  String retrieveMostRecentPatch(dynamic jsonData) {
+    return jsonData['query']['pages'].values.first['revisions'][0]['user'];
+  }
+
+  int retrievePageID(dynamic jsonData) {
+    return jsonData['query']['pages'].values.first['pageid'];
+  }
+
+  String parseWikipediaJson(dynamic jsonData) {
+    return jsonData['query']['pages'].values.first;
   }
 }

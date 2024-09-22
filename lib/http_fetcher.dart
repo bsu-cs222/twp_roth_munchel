@@ -8,7 +8,8 @@ class FetchHttp {
         await http.get(Uri.parse('https://en.wikipedia.org/wiki/Soup'));
     if (response.statusCode == 200) {
       return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-    } else {
+    }
+    else {
       throw Exception('Failed to load album');
     }
   }

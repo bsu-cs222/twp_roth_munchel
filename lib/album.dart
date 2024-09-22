@@ -1,25 +1,29 @@
 class Album {
+  final String query;
+  final int pages;
+  final String revisions;
   final String user;
-  final int pageId;
-  final String name;
 
   const Album({
+    required this.query,
+    required this.pages,
+    required this.revisions,
     required this.user,
-    required this.pageId,
-    required this.name,
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'userId': String user,
-        'pageId': int pageId,
-        'title': String title,
+        'query': String query,
+        'pages': int pages,
+        'revisions': String revisions,
+        'user': String user,
       } =>
         Album(
+          query: query,
+          pages: pages,
+          revisions: revisions,
           user: user,
-          pageId: pageId,
-          name: title,
         ),
       _ => throw const FormatException('Failed to load album'),
     };
