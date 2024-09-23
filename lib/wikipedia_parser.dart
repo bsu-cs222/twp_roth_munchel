@@ -7,7 +7,7 @@ class WikipediaParser {
     return jsonData['query']['pages'].values.first['pageid'];
   }
 
-  String parseWikipediaJson(dynamic jsonData) {
-    return jsonData['query']['pages'].values.first;
+  dynamic parseWikipediaJson(dynamic jsonData) {
+    return jsonData;
   }
 }
