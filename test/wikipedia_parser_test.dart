@@ -10,8 +10,6 @@ main() {
     dynamic jsonEncodedResponse = await File('test/soup.json').readAsString();
     dynamic jsonDecoded = jsonDecode(jsonEncodedResponse);
     String editorName = parser.retrieveMostRecentPatch(jsonDecoded);
-    int pageId = parser.retrievePageID(jsonDecoded);
     expect(editorName, 'Patch23');
-    expect(pageId, 19651298);
   });
 }

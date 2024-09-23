@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twp_roth_munchel/revison_parser.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,5 +61,6 @@ class _WordCounterWidgetState extends State<WordCounterWidget> {
       _isProcessing = true;
     });
     final textFieldContent = _controller.text;
+    final revisionParser = RevisionParser();
   }
 }
