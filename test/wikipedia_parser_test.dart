@@ -1,23 +1,38 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:twp_roth_munchel/wikipedia_parser.dart';
 
-main() {
+void main() {
   final parser = WikipediaParser();
 
-  test('Patch23 is the most recent user', () async {
-    final jsonEncodedResponse = await File('test/soup.json').readAsString();
-    final jsonDecoded = jsonDecode(jsonEncodedResponse);
-    final editorName = parser.parse(jsonDecoded);
-    expect(editorName, 'Patch23');
+  test('Patch23 made the most recent edit to the Soup page', () async {
+    // Given...
+    final jsonObject = await _loadSampleData('soup.json');
+
+    // When...
+    final changeRecord = parser.parse(jsonObject);
+
+    // Then ...
+    expect(changeRecord.user, 'Patch23');
   });
 
-  test('The PageID is 19651298', () async {
-    final jsonEncodedResponse = await File('test/soup.json').readAsString();
-    final jsonDecoded = jsonDecode(jsonEncodedResponse);
-    final pageId = parser.parse(jsonDecoded);
-    expect(pageId, 19651298);
+  test('GreenC bot made the most recent edit to the Ball State page', () async {
+    final jsonObject = await _loadSampleData('bsu.json');
+    final changeRecord = parser.parse(jsonObject);
+    expect(changeRecord.user, 'GreenC bot');
   });
+
+  test('The most recent change to Soup was made on 2024-08-12T14:06:36Z',
+      () async {
+    final jsonObject = await _loadSampleData('soup.json');
+    WikipediaChange record = parser.parse(jsonObject);
+    DateTime expected = DateTime.parse('2024-08-12T14:06:36Z');
+    expect(record.timestamp, expected);
+  });
+}
+
+dynamic _loadSampleData(String testFileName) async {
+  final jsonEncodedResponse = await File('test/$testFileName').readAsString();
+  return jsonDecode(jsonEncodedResponse);
 }

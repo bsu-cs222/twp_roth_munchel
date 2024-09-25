@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twp_roth_munchel/uri_builder.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,55 +11,62 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wikipedia Change Log App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        useMaterial3: true,
+    return const MaterialApp(
+      title: 'Flutter Demo',
+      home: Scaffold(
+        body: DefaultTextStyle(
+          style: TextStyle(fontSize: 32),
+          child: MyHomePage(),
+        ),
       ),
-      home: const WordCounterWidget(),
     );
   }
 }
 
-class WordCounterWidget extends StatefulWidget {
-  const WordCounterWidget({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
   @override
-  State<WordCounterWidget> createState() => _WordCounterWidgetState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _WordCounterWidgetState extends State<WordCounterWidget> {
-  final _controller = TextEditingController();
-  String _message = 'Press the button';
-  bool _isProcessing = false;
+class _MyHomePageState extends State<MyHomePage> {
+  final _textController = TextEditingController();
+  final _finalUrl = uriBuilder();
+  Future? _future;
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: const TextStyle(
-        fontSize: 32,
-      ),
+    return Center(
       child: Column(
         children: [
-          const Text('Please enter a URL'),
-          TextField(
-            controller: _controller,
-          ),
+          _future == null
+              ? const Text('Press the button!')
+              : FutureBuilder(
+                  future: _future,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return const Text('Timer is done!');
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
+                ),
           ElevatedButton(
-              onPressed: _isProcessing ? null : _onButtonPressedHitUrl,
-              child: const Text('Go')),
-          Text(_message),
+            onPressed: _onButtonPressed,
+            child: const Text('Go'),
+          ),
+          TextField(controller: _textController),
         ],
       ),
     );
   }
 
-  void _onButtonPressedHitUrl() {
+  void _onButtonPressed() {
     setState(() {
-      _message = 'please wait';
-      _isProcessing = true;
+      _future = Future.delayed(
+        const Duration(seconds: 3),
+      );
     });
-    final textFieldContent = _controller.text;
   }
 }

@@ -1,42 +1,15 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class FetchHttp {
-  Future<Album> fetchAlbum() async {
-    final response =
-        await http.get(Uri.parse('https://en.wikipedia.org/wiki/Soup'));
+  Future<String> fetchSoupPage() async {
+    dynamic response = await http.get(Uri.parse(
+        'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=soup&rvprop=timestamp|user&rvlimit=4&redirects'));
     if (response.statusCode == 200) {
-      return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+      dynamic httpEncodedResponse = http.read(Uri.parse(
+          'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=soup&rvprop=timestamp|user&rvlimit=4&redirects'));
+      return httpEncodedResponse;
     } else {
       throw Exception('Failed to load album');
     }
-  }
-}
-
-class Album {
-  final int userId;
-  final int id;
-  final String name;
-
-  const Album({
-    required this.userId,
-    required this.id,
-    required this.name,
-  });
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'userId': int userId,
-        'id': int id,
-        'title': String title,
-      } =>
-        Album(
-          userId: userId,
-          id: id,
-          name: title,
-        ),
-      _ => throw const FormatException('Failed to load album'),
-    };
   }
 }
