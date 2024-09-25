@@ -69,8 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _future = Future.delayed(
         const Duration(seconds: 3),
       );
-      String result = _finalUrl.finalUrlBuilder();
-      _isFinalUrl = result;
+      String result = _textController.text;
+      _isFinalUrl = _finalUrl.finalUrlBuilder(result);
     });
   }
 }
