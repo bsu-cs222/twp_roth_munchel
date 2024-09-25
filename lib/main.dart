@@ -33,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   final _finalUrl = uriBuilder();
+  String _isFinalUrl = '';
   Future? _future;
 
   @override
@@ -57,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Go'),
           ),
           TextField(controller: _textController),
+          Text(_isFinalUrl),
         ],
       ),
     );
@@ -67,6 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _future = Future.delayed(
         const Duration(seconds: 3),
       );
+      String result = _finalUrl.finalUrlBuilder();
+      _isFinalUrl = result;
     });
   }
 }

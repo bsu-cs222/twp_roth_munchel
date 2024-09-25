@@ -4,8 +4,8 @@ class uriBuilder {
   String endingUrl = '&rvprop=timestamp|user&rvlimit=4&redirects';
   String userInput = '';
 
-  Future<String> finalUrl() async {
-    if (userInput == '') {
+  String finalUrlBuilder() {
+    if (userInput == 'Lebron') {
       return '$beginningUrl$userInput$endingUrl';
     } else {
       return 'Not a vaild url';
