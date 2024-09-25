@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twp_roth_munchel/uri_builder.dart';
+import 'http_fetcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   final _finalUrl = uriBuilder();
+  final _jsonDataFetcher = FetchHttp();
   String _isFinalUrl = '';
+  String _isJsonData = '';
   Future? _future;
 
   @override
@@ -58,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Go'),
           ),
           TextField(controller: _textController),
-          Text(_isFinalUrl),
+          Text(_isJsonData),
         ],
       ),
     );
@@ -71,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
       String result = _textController.text;
       _isFinalUrl = _finalUrl.finalUrlBuilder(result);
+      _isJsonData = _jsonDataFetcher.fetchSoupPage(_isFinalUrl);
     });
   }
 }
