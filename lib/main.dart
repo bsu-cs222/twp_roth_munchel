@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twp_roth_munchel/uri_builder.dart';
+import 'package:twp_roth_munchel/revison_parser.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
-  final _finalUrl = uriBuilder();
+  final _finalUrl = UriBuilder();
+  final _revision = RevisionParser();
   Future? _future;
 
   @override
