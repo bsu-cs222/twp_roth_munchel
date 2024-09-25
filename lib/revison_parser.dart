@@ -2,11 +2,16 @@ class RevisionParser {
   String revision = '';
 
   theRevision() {
-    this.revision;
+    revision;
   }
 
-  String makeRevison(object) {
-    revision = object;
+  String makeRevison(String revision) {
+    revision = revision;
+    return revision;
+  }
+
+  Future<String> futureRevision() async {
+    String revision = await Future.value(makeRevison(theRevision()));
     return revision;
   }
 }

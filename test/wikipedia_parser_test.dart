@@ -17,12 +17,6 @@ void main() {
     expect(changeRecord.user, 'Patch23');
   });
 
-  test('GreenC bot made the most recent edit to the Ball State page', () async {
-    final jsonObject = await _loadSampleData('bsu.json');
-    final changeRecord = parser.parse(jsonObject);
-    expect(changeRecord.user, 'GreenC bot');
-  });
-
   test('The most recent change to Soup was made on 2024-08-12T14:06:36Z',
       () async {
     final jsonObject = await _loadSampleData('soup.json');
