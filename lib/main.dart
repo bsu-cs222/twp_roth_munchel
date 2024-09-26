@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twp_roth_munchel/uri_builder.dart';
 import 'http_fetcher.dart';
+import 'wikipedia_parser.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,11 +33,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _wikipediaChange = WikipediaParser();
   final _textController = TextEditingController();
-  final _finalUrl = uriBuilder();
+  final _finalWikipediaUrl = uriBuilder();
   final _jsonDataFetcher = FetchHttp();
-  String _isFinalUrl = '';
-  String _isJsonData = '';
+  Future<String>? _isFinalUrl;
+  Future<String>? _isJsonDataReader;
   Future? _future;
 
   @override
@@ -61,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Go'),
           ),
           TextField(controller: _textController),
-          Text(_isJsonData),
+          Text(_isJsonDataReader as String),
         ],
       ),
     );
@@ -69,12 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onButtonPressed() {
     setState(() {
-      _future = Future.delayed(
-        const Duration(seconds: 3),
-      );
       String result = _textController.text;
-      _isFinalUrl = _finalUrl.finalUrlBuilder(result);
-      _isJsonData = _jsonDataFetcher.fetchSoupPage(_isFinalUrl);
+      _isFinalUrl = _finalWikipediaUrl.finalUrlBuilder(result);
+      //_isJsonData = _wikipediaChange.parse(_isFinalUrl);
+      _isJsonDataReader = _jsonDataFetcher.fetchSoupPage(_isFinalUrl as String);
     });
   }
 }

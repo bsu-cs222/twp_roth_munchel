@@ -6,9 +6,9 @@ main() {
   test('The link to Soup we be built', () async {
     final revison = RevisionParser();
     final soup = await revison.futureRevision();
-    final uribuilder = UriBuilder();
-    final uri = uribuilder.finalUrl(soup);
+    final uribuilder = uriBuilder();
+    final uri = uribuilder.finalUrlBuilder('Lebron');
     expect(uri,
-        'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Soup&rvprop=timestamp|user&rvlimit=4&redirects');
+        'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Lebron&rvprop=timestamp|user&rvlimit=4&redirects');
   });
 }
