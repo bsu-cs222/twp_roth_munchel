@@ -10,9 +10,9 @@ main() {
   });
 
   test('The link will include soup', () {
-    String Soup = revision.makeRevison('Soup');
+    String soup = revision.makeRevison('Soup');
     String link =
-        'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=$Soup&rvprop=timestamp|user&rvlimit=4&redirects';
+        'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=$soup&rvprop=timestamp|user&rvlimit=4&redirects';
     expect(link,
         'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Soup&rvprop=timestamp|user&rvlimit=4&redirects');
   });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twp_roth_munchel/uri_builder.dart';
-import 'http_fetcher.dart';
 import 'wikipedia_parser.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -35,24 +35,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _wikipediaChange = WikipediaParser();
   final _textController = TextEditingController();
-  final _finalWikipediaUrl = uriBuilder();
-  final _jsonDataFetcher = FetchHttp();
-  Future<String>? _isFinalUrl;
+  final _finalWikipediaUrl = UriBuilder();
   Future<String>? _isJsonDataReader;
-  Future? _future;
+  Future<String>? _future;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
-          _future == null
+          _future != null
               ? const Text('Press the button!')
               : FutureBuilder(
                   future: _future,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      return const Text('Timer is done!');
+                      Text(snapshot.data!);
                     } else {
                       return const CircularProgressIndicator();
                     }
@@ -71,10 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onButtonPressed() {
     setState(() {
-      String result = _textController.text;
-      _isFinalUrl = _finalWikipediaUrl.finalUrlBuilder(result);
-      //_isJsonData = _wikipediaChange.parse(_isFinalUrl);
-      _isJsonDataReader = _jsonDataFetcher.fetchSoupPage(_isFinalUrl as String);
+      _future = http.read(
+          Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)));
     });
   }
 }

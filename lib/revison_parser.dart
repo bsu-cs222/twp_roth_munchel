@@ -10,8 +10,8 @@ class RevisionParser {
     return revision;
   }
 
-  Future<String> futureRevision() async {
-    String revision = await Future.value(makeRevison(theRevision()));
+  Future<String> futureRevision(searchTerm) async {
+    String revision = await Future.value(searchTerm);
     return revision;
   }
 }

@@ -1,10 +1,10 @@
-class uriBuilder {
+class UriBuilder {
   String beginningUrl =
       'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=';
   String endingUrl = '&rvprop=timestamp|user&rvlimit=4&redirects';
   String userInput = '';
 
-  Future<String> finalUrlBuilder(String input) async {
+  String finalUrlBuilder(String input) {
     userInput = input;
     String finalUrl = '$beginningUrl$userInput$endingUrl';
     if (userInput != '') {
