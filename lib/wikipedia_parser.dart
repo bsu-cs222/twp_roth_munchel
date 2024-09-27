@@ -1,5 +1,5 @@
 class WikipediaParser {
-  WikipediaChange parse(dynamic jsonData) {
+  parse(dynamic jsonData) {
     String user =
         jsonData['query']['pages'].values.first['revisions'][0]['user'];
     DateTime timestamp = DateTime.parse(

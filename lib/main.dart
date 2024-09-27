@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:twp_roth_munchel/uri_builder.dart';
 import 'wikipedia_parser.dart';
@@ -33,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _wikipediaChange = WikipediaParser();
   final _textController = TextEditingController();
   final _finalWikipediaUrl = UriBuilder();
   Future<String>? _isJsonDataReader;
@@ -50,7 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   future: _future,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      Text(snapshot.data!);
+                      final data = snapshot.data!;
+                      final jsonDecodedResponse = jsonDecode(data);
+                      final parser = WikipediaParser();
+                      return Text(parser.parse(jsonDecodedResponse));
                     } else {
                       return const CircularProgressIndicator();
                     }
@@ -61,7 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Go'),
           ),
           TextField(controller: _textController),
-          Text(_isJsonDataReader as String),
         ],
       ),
     );
