@@ -37,37 +37,47 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   final _finalWikipediaUrl = UriBuilder();
-  Future<String>? _isJsonDataReader;
+  final _parser = WikipediaParser();
   Future<String>? _future;
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          _future != null
-              ? const Text('Press the button!')
-              : FutureBuilder(
+        child: Column(
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: TextField(controller: _textController),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+                onPressed: _onButtonPressed, child: const Text('Search')),
+          ),
+        ),
+        _future != null
+            ? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FutureBuilder<String>(
                   future: _future,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      final data = snapshot.data!;
-                      final jsonDecodedResponse = jsonDecode(data);
-                      final parser = WikipediaParser();
-                      return Text(parser.parse(jsonDecodedResponse));
+                      final jsonEncodedResponse = snapshot.data;
+                      final jsonDecoded = jsonDecode(jsonEncodedResponse!);
+                      final parsedData = _parser.parse(jsonDecoded);
+                      return parsedData;
                     } else {
                       return const CircularProgressIndicator();
                     }
                   },
                 ),
-          ElevatedButton(
-            onPressed: _onButtonPressed,
-            child: const Text('Go'),
-          ),
-          TextField(controller: _textController),
-        ],
-      ),
-    );
+              )
+            : const Text('Wikipedia Change Searcher'),
+      ],
+    ));
   }
 
   void _onButtonPressed() {
