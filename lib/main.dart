@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   final _finalWikipediaUrl = UriBuilder();
-  Future<String>? _isJsonDataReader;
+  String output = '';
   Future<String>? _future;
 
   @override
@@ -45,26 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Center(
       child: Column(
         children: [
-          _future != null
-              ? const Text('Press the button!')
-              : FutureBuilder(
-                  future: _future,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      final data = snapshot.data!;
-                      final jsonDecodedResponse = jsonDecode(data);
-                      final parser = WikipediaParser();
-                      return Text(parser.parse(jsonDecodedResponse));
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  },
-                ),
           ElevatedButton(
             onPressed: _onButtonPressed,
             child: const Text('Go'),
           ),
           TextField(controller: _textController),
+          Text(output),
         ],
       ),
     );
@@ -74,6 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _future = http.read(
           Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)));
+      final jsonDecodedResponse = jsonDecode(_future as String);
+      final parser = WikipediaParser();
+      output = (parser.parse(jsonDecodedResponse));
     });
   }
 }
