@@ -38,18 +38,18 @@ class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   final _finalWikipediaUrl = UriBuilder();
   String output = '';
-  Future<String>? _future;
+  String _future = '';
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
+          TextField(controller: _textController),
           ElevatedButton(
             onPressed: _onButtonPressed,
             child: const Text('Go'),
           ),
-          TextField(controller: _textController),
           Text(output),
         ],
       ),
@@ -58,9 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onButtonPressed() {
     setState(() {
-      _future = http.read(
-          Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)));
-      final jsonDecodedResponse = jsonDecode(_future as String);
+      _future = http.read(Uri.parse(
+          _finalWikipediaUrl.finalUrlBuilder(_textController.text))) as String;
+      final jsonDecodedResponse = jsonDecode(_future);
       final parser = WikipediaParser();
       output = (parser.parse(jsonDecodedResponse));
     });
