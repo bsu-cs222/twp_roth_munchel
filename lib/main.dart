@@ -37,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   final _finalWikipediaUrl = UriBuilder();
+  final _parser = WikipediaParser();
   String output = '';
   Future<String>? _future;
 
@@ -45,25 +46,53 @@ class _MyHomePageState extends State<MyHomePage> {
     return Center(
       child: Column(
         children: [
-          TextField(controller: _textController),
-          ElevatedButton(
-            onPressed: _onButtonPressed,
-            child: const Text('Go'),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: TextField(controller: _textController),
+              ),
+            ],
           ),
-          Text(output),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: _onButtonPressed,
+                  child: const Text('Search...'),
+                ),
+              ),
+            ],
+          ),
+          _future != null
+              ? Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: FutureBuilder(
+                      future: _future,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done &&
+                            snapshot.data != null) {
+                          final parsedData = _parser.parse(snapshot.data);
+                          return Text(parsedData);
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
+                )
+              : const Text('Wikipedia Change Parser')
         ],
       ),
     );
   }
 
-  void _onButtonPressed() async {
-    final theString = await _future;
+  void _onButtonPressed() {
     setState(() {
       _future = http.read(
           Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)));
-      final Map jsonDecoder = jsonDecode(theString!);
-      final parser = WikipediaParser();
-      output = (parser.parse(jsonDecoder));
     });
   }
 }
