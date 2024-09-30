@@ -36,6 +36,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
+  WikipediaChange changeRecord =
+      WikipediaChange(user: 'Example Guy', timestamp: DateTime.now());
+
   final _finalWikipediaUrl = UriBuilder();
   String output = '';
   Future<String>? _future;
@@ -53,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: onButtonPressed,
             child: const Text('Search'),
           ),
-          Text(output),
+          WikipediaChangeWidget(changeRecord),
         ],
       ),
     );
