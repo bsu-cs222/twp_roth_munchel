@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   final _finalWikipediaUrl = UriBuilder();
   String output = '';
-  String _future = '';
+  Future<String>? _future;
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +56,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _onButtonPressed() {
+  void _onButtonPressed() async {
+    final theString = await _future;
     setState(() {
-      _future = http.read(Uri.parse(
-          _finalWikipediaUrl.finalUrlBuilder(_textController.text))) as String;
-      final jsonDecodedResponse = jsonDecode(_future);
+      _future = http.read(
+          Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)));
+      final Map jsonDecoder = jsonDecode(theString!);
       final parser = WikipediaParser();
-      output = (parser.parse(jsonDecodedResponse));
+      output = (parser.parse(jsonDecoder));
     });
   }
 }
