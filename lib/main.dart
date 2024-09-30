@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _finalWikipediaUrl = UriBuilder();
   String output = '';
   Future<String>? _future;
+  String theString = '';
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onButtonPressed() async {
-    final theString = await _future;
     setState(() {
       _future = http.read(
           Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)),
@@ -90,12 +90,15 @@ class _MyHomePageState extends State<MyHomePage> {
             'user-agent':
                 'Revision Reporter/0.1 (https://www.cs.bsu.edu/~pvgestwicki/courses/cs222Fa24; brody.roth@bsu.edu/cole.munchel@bsu.edu)'
           });
-      final Map jsonDecoder = jsonDecode(theString!);
-      final parser = WikipediaParser();
-      output = (parser.parse(jsonDecoder));
     });
+    theString = (await _future)!;
+    Map<String, String> jsonDecoder = jsonDecode(theString);
+    final parser = WikipediaParser();
+    output = (parser.parse(jsonDecoder));
   }
 }
+
+//Do we need this part if output is what were really after
 
 class WikipediaChangeWidget extends StatelessWidget {
   final WikipediaChange changeRecord;
