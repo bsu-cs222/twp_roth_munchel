@@ -45,10 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Center(
       child: Column(
         children: [
+          const TitleSection(
+              name: 'Search Wikiepdia ',
+              location: 'Please Enter a Wikipedia Title'),
           TextField(controller: _textController),
           ElevatedButton(
-            onPressed: _onButtonPressed,
-            child: const Text('Go'),
+            onPressed: onButtonPressed,
+            child: const Text('Search'),
           ),
           Text(output),
         ],
@@ -56,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _onButtonPressed() async {
+  void onButtonPressed() async {
     final theString = await _future;
     setState(() {
       _future = http.read(
@@ -65,5 +68,66 @@ class _MyHomePageState extends State<MyHomePage> {
       final parser = WikipediaParser();
       output = (parser.parse(jsonDecoder));
     });
+  }
+}
+
+class WikipediaChangeWidget extends StatelessWidget {
+  final WikipediaChange changeRecord;
+
+  const WikipediaChangeWidget(this.changeRecord, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('User: ${changeRecord.user}'),
+        Text('Timestamp: ${changeRecord.timestamp.toString()}'),
+      ],
+    );
+  }
+}
+
+class TitleSection extends StatelessWidget {
+  const TitleSection({
+    super.key,
+    required this.name,
+    required this.location,
+  });
+
+  final String name;
+  final String location;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(32),
+      child: Row(children: [
+        Expanded(
+          /*1*/
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              /*2*/
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Text(
+                location,
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ] /*3*/
+          ),
+    );
   }
 }
