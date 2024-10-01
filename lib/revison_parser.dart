@@ -5,7 +5,7 @@ class RevisionParser {
     revision;
   }
 
-  String makeRevison(String revision) {
+  String makeRevision(String revision) {
     revision = revision;
     return revision;
   }

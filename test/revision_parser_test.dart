@@ -5,12 +5,12 @@ main() {
   final revision = RevisionParser();
   test('The word will be changed', () {
     String word = "Cat";
-    word = revision.makeRevison('Dog');
+    word = revision.makeRevision('Dog');
     expect(word, 'Dog');
   });
 
   test('The link will include soup', () {
-    String soup = revision.makeRevison('Soup');
+    String soup = revision.makeRevision('Soup');
     String link =
         'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=$soup&rvprop=timestamp|user&rvlimit=4&redirects';
     expect(link,
