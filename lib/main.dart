@@ -15,11 +15,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home: Scaffold(
+    return MaterialApp(
+      title: 'Wikipedia Change Search Page',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+        useMaterial3: true,
+      ),
+      home: const Scaffold(
         body: DefaultTextStyle(
-          style: TextStyle(fontSize: 32),
+          style: TextStyle(fontSize: 30),
           child: MyHomePage(),
         ),
       ),
@@ -37,7 +41,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
   WikipediaChange changeRecord =
-      WikipediaChange(user: 'Example Guy', timestamp: DateTime.now());
+      WikipediaChange(user: 'User', timestamp: DateTime.now());
 
   final _finalWikipediaUrl = UriBuilder();
   String output = '';
@@ -45,28 +49,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          const TitleSection(
-              name: 'Search Wikiepdia ',
-              location: 'Please Enter a Wikipedia Title'),
-          TextField(controller: _textController),
-          ElevatedButton(
-            onPressed: onButtonPressed,
-            child: const Text('Search'),
+    return Column(
+      children: [
+        const TitleSection(
+            name: 'Wikipedia Editor Data',
+            location: 'Please Enter a Wikipedia Title'),
+        Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: TextField(controller: _textController),
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: _onButtonPressed,
+                  child: const Text('Go'),
+                ),
+              ),
+              const SizedBox(
+                width: 40,
+                height: 50,
+              ),
+              Column(
+                children: [
+                  Center(child: WikipediaChangeWidget(changeRecord)),
+                ],
+              ),
+              Text(output)
+            ],
           ),
-          WikipediaChangeWidget(changeRecord),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  void onButtonPressed() async {
+  void _onButtonPressed() async {
     final theString = await _future;
     setState(() {
       _future = http.read(
-          Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)));
+          Uri.parse(_finalWikipediaUrl.finalUrlBuilder(_textController.text)),
+          headers: {
+            'user-agent':
+                'Revision Reporter/0.1 (https://www.cs.bsu.edu/~pvgestwicki/courses/cs222Fa24; brody.roth@bsu.edu/cole.munchel@bsu.edu)'
+          });
       final Map jsonDecoder = jsonDecode(theString!);
       final parser = WikipediaParser();
       output = (parser.parse(jsonDecoder));
@@ -106,11 +132,9 @@ class TitleSection extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       child: Row(children: [
         Expanded(
-          /*1*/
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              /*2*/
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
@@ -129,8 +153,7 @@ class TitleSection extends StatelessWidget {
             ],
           ),
         ),
-      ] /*3*/
-          ),
+      ]),
     );
   }
 }

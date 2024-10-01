@@ -1,16 +1,12 @@
 # twp_roth_munchel
 
-A new Flutter project.
+CS 230 Two Week Project
+
+Authors: Cole Munchel and Brody Roth
+
+This project was trying to take data from a wikipedia title and output the final editor and the time stamp that they did it. They wanted us to have the system tell you if there is a network problem. They also wanted us to give the last 4 users and output names and dates and wanted us to try 30 as well. This project was completed by Cole Munchel and Brody Roth.
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
