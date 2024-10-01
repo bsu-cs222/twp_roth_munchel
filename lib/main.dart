@@ -91,10 +91,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 'Revision Reporter/0.1 (https://www.cs.bsu.edu/~pvgestwicki/courses/cs222Fa24; brody.roth@bsu.edu/cole.munchel@bsu.edu)'
           });
     });
-    theString = (await _future)!;
-    Map<String, String> jsonDecoder = jsonDecode(theString);
-    final parser = WikipediaParser();
-    output = (parser.parse(jsonDecoder));
+    if (_future != null) {
+      theString = (await _future)!;
+      Map<String, String> jsonDecoder = jsonDecode(theString);
+      final parser = WikipediaParser();
+      output = (parser.parse(jsonDecoder));
+    } else {
+      output = 'Please check your Internet Connection';
+    }
   }
 }
 
